@@ -101,7 +101,7 @@ class RobotPool
           @failCount+=1
           @thisfailCount+=1
           callback.call(code,res)
-          puts "#{@hostAddress}#{url}"
+          puts "#{code}#{@hostAddress}#{url}"
         end
       })
     }

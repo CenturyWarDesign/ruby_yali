@@ -9,16 +9,16 @@ require File.expand_path('../RobotPool.rb', __FILE__)
   lambda{
     rand(20).times{
       robot.guestlogin(lambda{
-        # robot.login(lambda{
-        #   robot.loginwithtoken(lambda{
-        #   	 robot.loginwithtoken(lambda{
-        #   	 	robot.loginwithtoken(lambda{
-        #   	 		robot.loginwithtoken(lambda{
-        #   			})
-        #   		})
-        #   	})
-        #   })
-        # })
+        robot.login(lambda{
+          robot.loginwithtoken(lambda{
+          	 # robot.checkuser(lambda{
+          	 	robot.setgameinfo(lambda{
+          	 	# 	robot.loginwithtoken(lambda{
+          			# })
+          		})
+          	# })
+          })
+        })
       })
       sleep(1)
     }
@@ -66,7 +66,7 @@ def loadRobotFromFile
 	#end
 end
 
-@maxcount=100
+@maxcount=20
 
 Thread.start{
 	count=0
@@ -83,6 +83,7 @@ Thread.start{
 Thread.start{
 	while(true)
 		puts ""
+		#@nowcount=0
 		@nowcount=@pool.robotcount
 		puts "Remain Robot : #{@nowcount}"
 		while @nowcount<@maxcount

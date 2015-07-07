@@ -7,7 +7,8 @@ module NetworkHelper
       uri = URI.parse(url)
       res = Net::HTTP.post_form(uri, params)
       callback.call(res.code.to_i,res.body)
-    rescue
+    rescue Exception => e
+     puts e.message  
       callback.call(-1,$!)
     end
   end

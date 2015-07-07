@@ -133,6 +133,44 @@ class Robot
     })
   end
 
+  def checkuser(success=nil,fail=nil)
+    params={}
+    params.store("user_id",@user.userId)
+    params.store("login_token",@user.loginToken)
+    params.store("udid",@udid)
+    params.store("lang","en")
+    @robotPool.requestConnect("/api/server/check_user",params,lambda{
+    |code,data|
+      if(code==0)
+        @user.userId=data['user_id']
+        @user.loginToken=data['login_token']
+        success.call() if success!=nil
+      else
+        fail.call(code) if fail!=nil
+      end
+    })
+  end
+
+   def setgameinfo(success=nil,fail=nil)
+    params={}
+    params.store("user_id",@user.userId)
+    params.store("game_user_name",@user.loginToken)
+     params.store("game_user_id",234)
+    params.store("udid",@udid)
+    params.store("lang","en")
+    @robotPool.requestConnect("/api/usercenter/set_game_info",params,lambda{
+    |code,data|
+      if(code==0)
+        @user.userId=data['user_id']
+        @user.loginToken=data['login_token']
+        success.call() if success!=nil
+      else
+        fail.call(code) if fail!=nil
+      end
+    })
+  end
+
+
   def loginwithtoken(success=nil,fail=nil)
     params={}
     params.store("user_id",@user.userId)
