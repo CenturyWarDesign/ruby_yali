@@ -17,14 +17,14 @@ require File.expand_path('../RobotPool.rb', __FILE__)
 		          	 			robot.createOrder(lambda{
 									robot.updateOrder(lambda{
 									})
-									sleep(1)
+									# sleep(1)
 								})
-								sleep(1)
+								# sleep(1)
 		          		})
-		          		sleep(1)
+		          		# sleep(1)
 		          	# })
 		          })
-		          sleep(1)
+		          # sleep(1)
 		      # }
 	        })
 	      })
@@ -74,7 +74,7 @@ def loadRobotFromFile
 	#end
 end
 
-@maxcount=300
+@maxcount=100
 
 Thread.start{
 	count=0
