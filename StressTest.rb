@@ -1,32 +1,40 @@
 require File.expand_path('../RobotPool.rb', __FILE__)
 
 @pool=RobotPool.new
-@pool.hostAddress="http://127.0.0.1:80"
+@pool.hostAddress="http://52.24.242.98:80"
 
 @robotBehavior=lambda{
 |robot|
   robot.open(
-  lambda{
-    rand(20).times{
-      robot.guestlogin(lambda{
-        robot.login(lambda{
-          robot.loginwithtoken(lambda{
-          	 # robot.checkuser(lambda{
-          	 	robot.setgameinfo(lambda{
-          	 	# 	robot.loginwithtoken(lambda{
-          			# })
-          		})
-          	# })
-          })
-        })
-      })
-      sleep(1)
-    }
-    robot.kill()
-  },
-  lambda{
-    robot.kill()
-  }
+	  lambda{
+	    # rand(20).times{
+	      robot.guestlogin(lambda{
+	        robot.login(lambda{
+	        	# rand(20).times{
+		          robot.loginwithtoken(lambda{
+		          	 # robot.checkuser(lambda{
+		          	 	robot.setgameinfo(lambda{
+		          	 			robot.createOrder(lambda{
+									robot.updateOrder(lambda{
+									})
+									sleep(1)
+								})
+								sleep(1)
+		          		})
+		          		sleep(1)
+		          	# })
+		          })
+		          sleep(1)
+		      # }
+	        })
+	      })
+	      # sleep(1)
+	    # }
+	    robot.kill()
+	  },
+	  lambda{
+	    robot.kill()
+	  }
   )
 }
 
@@ -49,10 +57,10 @@ def loadRobotFromFile
 				  r.open( lambda{
 					r.register(lambda{
 					  r.login(lambda{
-						#r.createOrder(lambda{
-						#	r.updateOrder(lambda{
-						#	})
-						#})
+						r.createOrder(lambda{
+							r.updateOrder(lambda{
+							})
+						})
 					  })
 					})
 				  })
@@ -66,7 +74,7 @@ def loadRobotFromFile
 	#end
 end
 
-@maxcount=20
+@maxcount=300
 
 Thread.start{
 	count=0
@@ -87,7 +95,7 @@ Thread.start{
 		@nowcount=@pool.robotcount
 		puts "Remain Robot : #{@nowcount}"
 		while @nowcount<@maxcount
-				makeRobot()
+			makeRobot()
 			@nowcount+=1
 		end
 		@pool.showLog()

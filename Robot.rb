@@ -38,7 +38,7 @@ class Robot
   end
 
   def restart
-    initialize
+    # initialize
     #run
   end
 
@@ -155,14 +155,14 @@ class Robot
     params={}
     params.store("user_id",@user.userId)
     params.store("game_user_name",@user.loginToken)
-     params.store("game_user_id",234)
+    params.store("game_user_id",234)
     params.store("udid",@udid)
     params.store("lang","en")
     @robotPool.requestConnect("/api/usercenter/set_game_info",params,lambda{
     |code,data|
       if(code==0)
-        @user.userId=data['user_id']
-        @user.loginToken=data['login_token']
+        # @user.userId=data['user_id']
+        # @user.loginToken=data['login_token']
         success.call() if success!=nil
       else
         fail.call(code) if fail!=nil
@@ -180,7 +180,7 @@ class Robot
     @robotPool.requestConnect("/api/usercenter/login_with_token",params,lambda{
     |code,data|
       if(code==0)
-        @user.userId=data['user_id']
+        # @user.userId=data['user_id']
         @user.loginToken=data['login_token']
         success.call() if success!=nil
       else
