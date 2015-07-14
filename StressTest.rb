@@ -2,36 +2,37 @@ require File.expand_path('../RobotPool.rb', __FILE__)
 
 @pool=RobotPool.new
 @pool.hostAddress="http://52.24.242.98:80"
+# @pool.hostAddress="http://127.0.0.1:80"
 
 @robotBehavior=lambda{
 |robot|
   robot.open(
-	  lambda{
+	  # lambda{
 	    # rand(20).times{
-	      robot.guestlogin(lambda{
-	        robot.login(lambda{
+	      # robot.guestlogin(lambda{
+	        # robot.login(lambda{
 	        	# rand(20).times{
-		          robot.loginwithtoken(lambda{
+		          # robot.loginwithtoken(lambda{
 		          	 # robot.checkuser(lambda{
-		          	 	robot.setgameinfo(lambda{
-		          	 			robot.createOrder(lambda{
-									robot.updateOrder(lambda{
-									})
+		          	 	# robot.setgameinfo(lambda{
+		          	 	# 		robot.createOrder(lambda{
+									# robot.updateOrder(lambda{
+									# })
 									# sleep(1)
-								})
+								# })
 								# sleep(1)
-		          		})
+		          		# })
 		          		# sleep(1)
 		          	# })
-		          })
+		          # })
 		          # sleep(1)
 		      # }
-	        })
-	      })
+	        # })
+	      # })
 	      # sleep(1)
 	    # }
-	    robot.kill()
-	  },
+	    # robot.kill()
+	  # },
 	  lambda{
 	    robot.kill()
 	  }
@@ -45,36 +46,40 @@ def makeRobot()
 end
 
 def loadRobotFromFile
-	#File.open("Account.txt","r") do |file|
-	#	while line  = file.gets
-	#		arr=line.split(' ')
-	#		username=arr[0]
-	#		password=arr[1]
+	File.open("Account.txt","r") do |file|
+		while line  = file.gets
+			arr=line.split(' ')
+			user_id=arr[0]
+			login_token=arr[1]
 			robot=@pool.generateRobot()
-			robot.behavior=lambda{
-			|r|
-				while(true)
-				  r.open( lambda{
-					r.register(lambda{
-					  r.login(lambda{
-						r.createOrder(lambda{
-							r.updateOrder(lambda{
+			s = nil
+			s = lambda{|x|
+				x.loginwithtoken(s)
+			}
+			robot.behavior=lambda{|r|
+			  r.loginwithtoken(lambda{
+					r.loginwithtoken(lambda{
+						r.loginwithtoken(lambda{
+							r.loginwithtoken(lambda{
+								r.loginwithtoken(lambda{
+									r.loginwithtoken(lambda{
+										r.loginwithtoken(lambda{
+										})
+									})
+								})
 							})
 						})
-					  })
 					})
-				  })
-				  sleep(0.05)
-				end
+				})
 			}
-			#robot.user.username=username
-			#robot.user.password=password
+			robot.user.userId=user_id
+			robot.user.loginToken=login_token
 			robot.run()
-	#	end
-	#end
+		end
+	end
 end
 
-@maxcount=100
+@maxcount=400
 
 Thread.start{
 	count=0
